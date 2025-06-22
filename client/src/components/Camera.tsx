@@ -9,9 +9,10 @@ const Camera = ({ onError }: CameraProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const photoRef = useRef<HTMLCanvasElement>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
-  const [view, setView] = useState<"stream" | "form" | "loading">("stream");
+  const [view, setView] = useState<"stream" | "form" | "loading" | "results">("stream");
   const [prompt, setPrompt] = useState("");
   const [photoBlob, setPhotoBlob] = useState<Blob | null>(null);
+  const [resultVideoUrl, setResultVideoUrl] = useState<string | null>(null);
 
   const enableStream = async () => {
     try {
@@ -72,7 +73,7 @@ const Camera = ({ onError }: CameraProps) => {
       return;
     }
 
-    setView("loading"); // Set loading view
+    setView("loading");
 
     const formData = new FormData();
     formData.append("photo", photoBlob, "face.png");
@@ -86,16 +87,17 @@ const Camera = ({ onError }: CameraProps) => {
 
       if (!response.ok) {
         onError("Failed to process photo.");
+        setView("form");
       } else {
-        const result = await response.json();
-        console.log("Processing successful:", result);
+        // Handle video response
+        const videoBlob = await response.blob();
+        const videoUrl = URL.createObjectURL(videoBlob);
+        setResultVideoUrl(videoUrl);
+        setView("results");
       }
     } catch (err) {
       console.error("Error submitting form:", err);
       onError("Error submitting form.");
-    } finally {
-      // For now, we go back to the form view.
-      // In the future, you might go to a results view or back to the stream.
       setView("form");
     }
   };
@@ -103,6 +105,10 @@ const Camera = ({ onError }: CameraProps) => {
   const retakePhoto = () => {
     setPrompt("");
     setPhotoBlob(null);
+    if (resultVideoUrl) {
+      URL.revokeObjectURL(resultVideoUrl);
+      setResultVideoUrl(null);
+    }
     enableStream();
   };
 
@@ -121,6 +127,16 @@ const Camera = ({ onError }: CameraProps) => {
             display: view === "form" ? "block" : "none",
           }}
         ></canvas>
+        {view === "results" && resultVideoUrl && (
+          <video
+            className="results-video"
+            controls
+            id="myVideo"
+          >
+            <source src={resultVideoUrl} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        )}
       </div>
 
       {view === "stream" && (
@@ -143,7 +159,15 @@ const Camera = ({ onError }: CameraProps) => {
       {view === "loading" && (
         <div className="loading-view">
           <div className="loader"></div>
-          <p className="loading-text">cooking very hard rn fr...</p>
+          <p className="loading-text">preparing the rizz...</p>
+        </div>
+      )}
+
+      {view === "results" && (
+        <div className="controls">
+          <button onClick={retakePhoto} className="btn btn-secondary">
+            🔄 Create New Rizz
+          </button>
         </div>
       )}
     </>
