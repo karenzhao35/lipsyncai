@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="container">
+        <div className="header">
+          <h1 className="title">RIZZ CAM</h1>
+          <p className="subtitle">Gen Alpha Edition 🔥</p>
+        </div>
+
+        <div className="camera-container">
+          <video id="video" autoPlay playsInline></video>
+          <canvas id="canvas" className="hidden"></canvas>
+          <div id="photo-container" className="photo-container">
+            <canvas id="photo-canvas"></canvas>
+            <div id="laser-left" className="laser-eye"></div>
+            <div id="laser-right" className="laser-eye"></div>
+            <div id="mouth-overlay" className="mouth-overlay"></div>
+          </div>
+        </div>
+
+        <div className="controls">
+          <button id="capture-btn" className="btn btn-primary">
+            📸 Capture Your Rizz
+          </button>
+          <button id="listen-btn" className="btn btn-secondary hidden">
+            🎤 Activate Rizz Mode
+          </button>
+          <button id="retake-btn" className="btn btn-secondary hidden">
+            🔄 Retake Photo
+          </button>
+        </div>
+
+        <div id="status" className="status">
+          Say "Hi" or "Hello" to activate the rizz! 😎
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
