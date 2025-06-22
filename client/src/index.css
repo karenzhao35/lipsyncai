@@ -220,3 +220,21 @@ video, canvas {
   border-color: #66fcf1;
   box-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
 } 
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-view {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.loading-text {
+  font-size: 1.5rem;
+  color: #66fcf1;
+  margin-top: 15px;
+  font-style: italic;
+  font-family: 'Comic Sans MS', 'Chalkduster', 'cursive';
+} 

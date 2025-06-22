@@ -1,6 +1,18 @@
 import cohere
+import os
+from dotenv import load_dotenv
 
-co = cohere.ClientV2(api_key="XN8fxWxRCyzQ89syq8ydVudWZRfeIUELA1tfHCN9")
+# Load environment variables from the .env file
+load_dotenv()
+
+# Get the API key from the environment variables
+api_key = os.getenv("COHERE_API_KEY")
+
+# Check if the key exists
+if not api_key:
+    raise ValueError("COHERE_API_KEY not found in .env file")
+
+co = cohere.ClientV2(api_key=api_key)
 
 def generate_phrases(prompt: str) -> list[str]:
     res = co.chat(
@@ -14,4 +26,3 @@ def generate_phrases(prompt: str) -> list[str]:
     )
 
     return res.message.content[0].text.split("$")
-# "The Ultimate Guide to API Design: Best Practices for Building Robust and Scalable APIs"

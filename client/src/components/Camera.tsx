@@ -9,7 +9,7 @@ const Camera = ({ onError }: CameraProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const photoRef = useRef<HTMLCanvasElement>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
-  const [view, setView] = useState<"stream" | "form">("stream");
+  const [view, setView] = useState<"stream" | "form" | "loading">("stream");
   const [prompt, setPrompt] = useState("");
   const [photoBlob, setPhotoBlob] = useState<Blob | null>(null);
 
@@ -72,6 +72,8 @@ const Camera = ({ onError }: CameraProps) => {
       return;
     }
 
+    setView("loading"); // Set loading view
+
     const formData = new FormData();
     formData.append("photo", photoBlob, "face.png");
     formData.append("prompt", prompt);
@@ -91,6 +93,10 @@ const Camera = ({ onError }: CameraProps) => {
     } catch (err) {
       console.error("Error submitting form:", err);
       onError("Error submitting form.");
+    } finally {
+      // For now, we go back to the form view.
+      // In the future, you might go to a results view or back to the stream.
+      setView("form");
     }
   };
 
@@ -132,6 +138,13 @@ const Camera = ({ onError }: CameraProps) => {
           onSubmit={handleStart}
           onRetake={retakePhoto}
         />
+      )}
+
+      {view === "loading" && (
+        <div className="loading-view">
+          <div className="loader"></div>
+          <p className="loading-text">cooking very hard rn fr...</p>
+        </div>
       )}
     </>
   );
