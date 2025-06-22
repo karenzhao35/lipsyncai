@@ -55,23 +55,26 @@ const Camera = ({ onError }: CameraProps) => {
         photo.toBlob(async (blob) => {
           if (blob) {
             const formData = new FormData();
-            formData.append("photo", blob, "photo.jpg");
-            console.log(formData)
+            formData.append("photo", blob, "face.png");
 
             try {
-              const response = await fetch("/api/upload", {
+              const response = await fetch("http://127.0.0.1:8000/api/upload", {
                 method: "POST",
                 body: formData,
               });
 
               if (!response.ok) {
                 onError("Failed to upload photo.");
+              } else {
+                const result = await response.json();
+                console.log("Upload successful:", result);
               }
-            } catch (error) {
-              onError(`Error uploading photo: ${error}`);
+            } catch (err) {
+              console.error("Error uploading photo:", err);
+              onError("Error uploading photo.");
             }
           }
-        }, "image/jpeg");
+        }, "image/png");
       }
     }
   };

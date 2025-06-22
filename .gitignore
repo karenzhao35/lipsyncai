@@ -1,0 +1,24 @@
+# Python dependencies and artifacts
+__pycache__/
+*.pyc
+venv/
+*.egg-info/
+
+# Node.js dependencies and artifacts
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log 
