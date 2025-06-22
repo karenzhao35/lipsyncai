@@ -1,4 +1,3 @@
-
 @import "tailwindcss";
 
 * {
@@ -54,7 +53,7 @@ body {
 
 .camera-container {
   position: relative;
-  max-width: 400px;
+  max-width: 800px;
   margin: 0 auto 30px;
   border-radius: 20px;
   overflow: hidden;
@@ -249,8 +248,7 @@ video, canvas {
 
 .results-video {
   width: 100%;
-  max-width: 1200px;
-  height: auto;
+  height: 100%;
   border-radius: 10px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   margin: 0 auto;
@@ -259,7 +257,7 @@ video, canvas {
 
 #myVideo {
   width: 100%;
-  height: 600px;
+  height: auto;
   object-fit: cover;
   z-index: -100;
 }

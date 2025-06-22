@@ -34,7 +34,7 @@ async def process_photo(photo: UploadFile = File(...), prompt: str = Form(...)):
     
     # For now, return a dummy video file
     # In the future, this will be the actual generated video
-    dummy_video_path = "uploads/dummy_video.mp4"
+    dummy_video_path = "uploads/result_voice.mp4"
     
     # Create a dummy video file if it doesn't exist
     if not os.path.exists(dummy_video_path):
