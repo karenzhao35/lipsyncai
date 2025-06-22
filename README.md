@@ -1,4 +1,4 @@
-# 🔥💀 RIZZ CAM - NO CAP FR FR 💀🔥
+# 🔥💀 RIZZ-ASSIST - NO CAP FR FR 💀🔥
 
 Bro this app is **SENDING ME** 💀💀💀  
 Take a selfie, say _"hi"_ and **BOOM** – your face starts **YAPPING** with the most **UNHINGED Gen Alpha rizz** phrases while trap beats DROP in the background 🎵🔥  
