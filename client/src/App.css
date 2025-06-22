@@ -82,4 +82,21 @@ video, canvas {
 
 .hidden {
   display: none;
+}
+
+.rizz-input {
+  background-color: #0b0c10;
+  border: 2px solid #45a29e;
+  color: #c5c6c7;
+  padding: 15px;
+  border-radius: 50px;
+  font-size: 1rem;
+  width: 60%;
+  transition: all 0.3s ease;
+}
+
+.rizz-input:focus {
+  outline: none;
+  border-color: #66fcf1;
+  box-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
 } 

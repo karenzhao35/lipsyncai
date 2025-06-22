@@ -12,9 +12,6 @@ function App() {
       <div className="container">
         <Header />
         <Camera onError={setError} />
-        <div id="status" className="status">
-          Take a photo to begin rizzing 😎
-        </div>
       </div>
     </>
   );

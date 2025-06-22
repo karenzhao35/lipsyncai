@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import RizzInput from "./RizzInput";
 
 interface CameraProps {
   onError: (message: string) => void;
@@ -8,7 +9,9 @@ const Camera = ({ onError }: CameraProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const photoRef = useRef<HTMLCanvasElement>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
-  const [view, setView] = useState<"stream" | "photo">("stream");
+  const [view, setView] = useState<"stream" | "form">("stream");
+  const [prompt, setPrompt] = useState("");
+  const [photoBlob, setPhotoBlob] = useState<Blob | null>(null);
 
   const enableStream = async () => {
     try {
@@ -39,7 +42,7 @@ const Camera = ({ onError }: CameraProps) => {
     }
   };
 
-  const capturePhoto = async () => {
+  const capturePhoto = () => {
     if (videoRef.current && photoRef.current) {
       const video = videoRef.current;
       const photo = photoRef.current;
@@ -49,37 +52,51 @@ const Camera = ({ onError }: CameraProps) => {
         photo.width = video.videoWidth;
         photo.height = video.videoHeight;
         context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-        setView("photo");
         stopStream();
 
-        photo.toBlob(async (blob) => {
+        photo.toBlob((blob) => {
           if (blob) {
-            const formData = new FormData();
-            formData.append("photo", blob, "face.png");
-
-            try {
-              const response = await fetch("http://127.0.0.1:8000/api/upload", {
-                method: "POST",
-                body: formData,
-              });
-
-              if (!response.ok) {
-                onError("Failed to upload photo.");
-              } else {
-                const result = await response.json();
-                console.log("Upload successful:", result);
-              }
-            } catch (err) {
-              console.error("Error uploading photo:", err);
-              onError("Error uploading photo.");
-            }
+            setPhotoBlob(blob);
           }
         }, "image/png");
+
+        setView("form");
       }
+    }
+  };
+  
+  const handleStart = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!photoBlob) {
+      onError("No photo has been captured.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("photo", photoBlob, "face.png");
+    formData.append("prompt", prompt);
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/process", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        onError("Failed to process photo.");
+      } else {
+        const result = await response.json();
+        console.log("Processing successful:", result);
+      }
+    } catch (err) {
+      console.error("Error submitting form:", err);
+      onError("Error submitting form.");
     }
   };
 
   const retakePhoto = () => {
+    setPrompt("");
+    setPhotoBlob(null);
     enableStream();
   };
 
@@ -94,23 +111,28 @@ const Camera = ({ onError }: CameraProps) => {
         ></video>
         <canvas
           ref={photoRef}
-          style={{ display: view === "photo" ? "block" : "none" }}
+          style={{
+            display: view === "form" ? "block" : "none",
+          }}
         ></canvas>
       </div>
 
-      <div className="controls">
-        {view === "stream" && (
+      {view === "stream" && (
+        <div className="controls">
           <button onClick={capturePhoto} className="btn btn-primary">
             📸 Capture Your Rizz
           </button>
-        )}
+        </div>
+      )}
 
-        {view === "photo" && (
-          <button onClick={retakePhoto} className="btn btn-secondary">
-            🔄 Retake Photo
-          </button>
-        )}
-      </div>
+      {view === "form" && (
+        <RizzInput
+          prompt={prompt}
+          setPrompt={setPrompt}
+          onSubmit={handleStart}
+          onRetake={retakePhoto}
+        />
+      )}
     </>
   );
 };
