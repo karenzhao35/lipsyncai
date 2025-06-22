@@ -1,5 +1,6 @@
 from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
+from generate_rizz import generate_phrases
 
 app = FastAPI()
 
@@ -31,6 +32,8 @@ async def process_photo(photo: UploadFile = File(...), prompt: str = Form(...)):
     with open(f"uploads/{photo.filename}", "wb") as buffer:
         buffer.write(await photo.read())
     print(prompt)
+    phrases = generate_phrases(prompt)
+    print(phrases)
     return {
         "filename": photo.filename,
         "prompt": prompt,

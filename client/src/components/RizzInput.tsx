@@ -16,6 +16,7 @@ const RizzInput = ({ prompt, setPrompt, onSubmit, onRetake }: RizzInputProps) =>
         onChange={(e) => setPrompt(e.target.value)}
         placeholder="Fine-tune your rizz..."
         className="rizz-input"
+        maxLength={100}
       />
       <button type="submit" className="btn btn-primary">
         Start
