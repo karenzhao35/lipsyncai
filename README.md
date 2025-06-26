@@ -1,5 +1,7 @@
 # Rizz-assist 🔥
 
+<img width="1128" alt="Screenshot 2025-06-25 at 10 22 14 PM" src="https://github.com/user-attachments/assets/6c1892ea-e1b9-4c4c-89da-261cf1e6384f" />
+
 > *The AI wingman you never asked for, but always deserved.*
 
 **RizzAssist** is a deeply unserious project built for the Stupid Ideas Hackathon — and we actually won. It uses face detection, deepfakes, and AI-generated pickup lines to give you the ultimate automated flirting assistant. Take a selfie, let RizzAssist generate a killer pickup line with Cohere, synthesize a voice with TTS, and then lip-sync it onto your face with Wave2Lip.
