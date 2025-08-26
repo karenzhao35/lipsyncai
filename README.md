@@ -1,4 +1,4 @@
-# Rizz-assist 🔥
+# Lip sync AI 🔥
 
 <img width="1128" alt="Screenshot 2025-06-25 at 10 22 14 PM" src="https://github.com/user-attachments/assets/6c1892ea-e1b9-4c4c-89da-261cf1e6384f" />
 
