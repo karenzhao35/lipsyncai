@@ -1,0 +1,33 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Model files and checkpoints
+*.pth
+*.pkl
+*.h5
+
+# Audio/Video/Image outputs
+*.wav
+*.mp3
+*.mp4
+*.avi
+*.mkv
+*.webm
+*.gif
+*.jpg
+*.jpeg
+*.png
+
+# Project-specific output folders
+results/
+temp/
+
+# Filelists generated during training/eval
+filelists/*.txt
+evaluation/test_filelists/lr*.txt
+
+# Virtual environments
+env/
+venv/
+tts-env/
